@@ -26,7 +26,7 @@ for cpus in "${CPU_COUNTS[@]}"; do
   echo "-------------------------------------"
   echo "--- Running: $cpus cores ---"
   echo "-------------------------------------"
-  
+
   $GEM5_BIN $SIM_SCRIPT \
     --cpu-type=$CPU_TYPE \
     -c $WORKLOAD \
@@ -35,9 +35,9 @@ for cpus in "${CPU_COUNTS[@]}"; do
     --l1d_size=$L1D_SIZE \
     --l1i_size=$L1I_SIZE \
     --l2_size=$L2_SIZE
-  
+
   mv ./m5out/stats.txt ./m5out/stats_cores_${cpus}.txt
-  
+
   echo "--- Finished: $cpus cores. Stats saved to m5out/stats_cores_${cpus}.txt ---"
 done
 
