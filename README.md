@@ -41,7 +41,7 @@ The analysis is broken into three main experiments:
 * **Cache Size Scaling:** Analyzes the impact of different L1 and L2 cache sizes on performance.
 * **Cache Associativity Scaling:** Investigates how L1 and L2 cache associativity affects hit rates and execution time.
 
-The final results are collected from gem5's `stats.txt` output files and plotted using a Python script.
+The final results are collected from gem5's  output files and plotted using a Python script.
 
 ## Getting Started
 
@@ -51,7 +51,7 @@ Follow these steps to set up the project environment and compile the workload.
 
 * A working build of the [gem5 Simulator](https://www.gem5.org/documentation/learning_gem5/part1/building) (for X86)
 * `g++` compiler with OpenMP support
-* `python3` (for plotting)
+* `python3`
 
 ### Setup and Compilation
 
@@ -78,7 +78,7 @@ Follow these steps to set up the project environment and compile the workload.
     ```bash
     g++ -o sort_algorithm_binary -fopenmp -static sort_algorithm.cpp
     ```
-    *(Note: The binary file is already generated and you can find it in the repo!)*
+    *(Note: The binary file is already generated and you can find it in the repo so you can skip this!)*
 
 ## Usage
 
