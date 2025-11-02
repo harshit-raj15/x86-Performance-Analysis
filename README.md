@@ -93,7 +93,7 @@ Once the project is set up and the binary is compiled, you can run the analysis 
     chmod +x run_all.sh
     ```
 
-### Option 1: Run Manually
+#### Option 1: Run Manually
 
 *  Run the scaling experiments **one after another**. This is critical to prevent them from overwriting each other's output files.
     ```bash
@@ -112,7 +112,7 @@ Once the project is set up and the binary is compiled, you can run the analysis 
     python3 final_plot.py
     ```
 
-### Option 2: Run All (Recommended)
+#### Option 2: Run All (Recommended)
 
 *  You can skip the manual steps by directly running the `run_all.sh` script. This will execute all three scaling experiments sequentially and then automatically run the Python script to generate the final plots.
     ```bash
@@ -137,7 +137,7 @@ You will find all the result plot in **output_plot** directory.
 ### Cache Associativity Scaling
 | L1D Misses vs Associativity | L2 Misses vs Associativity | Ticks vs Associativity |
 | :---: | :---: | :---: |
-| <img src="output_plots/assoc_vs_l1d_misses.png" alt="Associativity vs L1D Misses" width="260"> | <img src="output_plots/assoc_vs_l2_miss.png" alt="Associativity vs L2 Miss" width="260"> | <img src="output_plots/assoc_vs_ticks.png" alt="Associativity vs Ticks" width="260"> |
+| <img src="output_plots/assoc_vs_l1d_miss.png" alt="Associativity vs L1D Misses" width="260"> | <img src="output_plots/assoc_vs_l2_miss.png" alt="Associativity vs L2 Miss" width="260"> | <img src="output_plots/assoc_vs_ticks.png" alt="Associativity vs Ticks" width="260"> |
 
 ## License
 
