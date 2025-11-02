@@ -88,8 +88,8 @@ Once the project is set up and the binary is compiled, you can run the analysis 
 *  Make the simulation scripts executable:
     ```bash
     chmod +x core_scaling.sh
-    chmod +x cache_size_scaling.sh
     chmod +x cache_associativity_scaling.sh
+    chmod +x cache_size_scaling.sh
     chmod +x run_all.sh
     ```
 
@@ -99,12 +99,12 @@ Once the project is set up and the binary is compiled, you can run the analysis 
     ```bash
     # Run the script to get core scaling result
     ./core_scaling.sh
+
+    # Run the script to get cache associativity scaling result
+    ./cache_associativity_scaling.sh
     
     # Run the script to get cache size scaling result
     ./cache_size_scaling.sh
-    
-    # Run the script to get cache associativity scaling result
-    ./cache_associativity_scaling.sh
     ```
 
 *  After the simulations are complete, run the Python script to generate the final plots:
@@ -129,15 +129,15 @@ You will find all the result plot in **output_plot** directory.
 | :---: | :---: |
 | <img src="output_plots/cores_vs_ticks.png" alt="Core Scaling vs Ticks" width="400"> | <img src="output_plots/cores_vs_time.png" alt="Core Scaling vs Time" width="400"> |
 
-### Cache Size Scaling
-| L1D Miss Heatmap | L2 Miss Heatmap | Ticks Heatmap |
-| :---: | :---: | :---: |
-| <img src="output_plots/cache_size_vs_l1d_miss_heatmap.png" alt="Cache Size vs L1D Miss" width="260"> | <img src="output_plots/cache_size_vs_l2_miss_heatmap.png" alt="Cache Size vs L2 Miss" width="260"> | <img src="output_plots/cache_size_vs_ticks_heatmap.png" alt="Cache Size vs Ticks" width="260"> |
-
 ### Cache Associativity Scaling
 | L1D Misses vs Associativity | L2 Misses vs Associativity | Ticks vs Associativity |
 | :---: | :---: | :---: |
 | <img src="output_plots/assoc_vs_l1d_miss.png" alt="Associativity vs L1D Misses" width="260"> | <img src="output_plots/assoc_vs_l2_miss.png" alt="Associativity vs L2 Miss" width="260"> | <img src="output_plots/assoc_vs_ticks.png" alt="Associativity vs Ticks" width="260"> |
+
+### Cache Size Scaling
+| L1D Miss Heatmap | L2 Miss Heatmap | Ticks Heatmap |
+| :---: | :---: | :---: |
+| <img src="output_plots/cache_size_vs_l1d_miss_heatmap.png" alt="Cache Size vs L1D Miss" width="260"> | <img src="output_plots/cache_size_vs_l2_miss_heatmap.png" alt="Cache Size vs L2 Miss" width="260"> | <img src="output_plots/cache_size_vs_ticks_heatmap.png" alt="Cache Size vs Ticks" width="260"> |
 
 ## License
 
