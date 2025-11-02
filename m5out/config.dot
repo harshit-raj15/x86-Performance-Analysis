@@ -3995,6 +3995,118 @@ tooltip="clk_gate_bins&#61;20&#10;\clk_gate_max&#61;1000000000000&#10;\clk_gate_
 
 }
 
+subgraph cluster_system_l2 {
+color="#000000";
+fillcolor="#bab6ae";
+fontcolor="#000000";
+fontname=Arial;
+fontsize=14;
+label="l2 \n: L2Cache";
+shape=box;
+style="rounded, filled";
+tooltip="addr_ranges&#61;0:18446744073709551615&#10;\assoc&#61;8&#10;\clk_domain&#61;system.cpu_clk_domain&#10;\clusivity&#61;mostly_incl&#10;\compressor&#61;Null&#10;\data_latency&#61;20&#10;\demand_mshr_reserve&#61;1&#10;\eventq_index&#61;0&#10;\is_read_only&#61;false&#10;\max_miss_count&#61;0&#10;\move_contractions&#61;true&#10;\mshrs&#61;20&#10;\partitioning_manager&#61;Null&#10;\power_model&#61;&#10;\power_state&#61;system.l2.power_state&#10;\prefetcher&#61;Null&#10;\replace_expansions&#61;true&#10;\replacement_policy&#61;system.l2.replacement_policy&#10;\response_latency&#61;20&#10;\sequential_access&#61;false&#10;\size&#61;262144&#10;\system&#61;system&#10;\tag_latency&#61;20&#10;\tags&#61;system.l2.tags&#10;\tgts_per_mshr&#61;12&#10;\warmup_percentage&#61;0&#10;\write_allocator&#61;Null&#10;\write_buffers&#61;8&#10;\writeback_clean&#61;false";
+system_l2_cpu_side [color="#000000", fillcolor="#94918b", fontcolor="#000000", fontname=Arial, fontsize=14, label=cpu_side, shape=box, style="rounded, filled"];
+system_l2_mem_side [color="#000000", fillcolor="#94918b", fontcolor="#000000", fontname=Arial, fontsize=14, label=mem_side, shape=box, style="rounded, filled"];
+subgraph cluster_system_l2_tags {
+color="#000000";
+fillcolor="#9f9c95";
+fontcolor="#000000";
+fontname=Arial;
+fontsize=14;
+label="tags \n: BaseSetAssoc";
+shape=box;
+style="rounded, filled";
+tooltip="assoc&#61;8&#10;\block_size&#61;64&#10;\clk_domain&#61;system.cpu_clk_domain&#10;\entry_size&#61;64&#10;\eventq_index&#61;0&#10;\indexing_policy&#61;system.l2.tags.indexing_policy&#10;\partitioning_manager&#61;Null&#10;\power_model&#61;&#10;\power_state&#61;system.l2.tags.power_state&#10;\replacement_policy&#61;system.l2.replacement_policy&#10;\sequential_access&#61;false&#10;\size&#61;262144&#10;\system&#61;system&#10;\tag_latency&#61;20&#10;\warmup_percentage&#61;0";
+subgraph cluster_system_l2_tags_indexing_policy {
+color="#000000";
+fillcolor="#84827c";
+fontcolor="#000000";
+fontname=Arial;
+fontsize=14;
+label="indexing_policy \n: TaggedSetAssociative";
+shape=box;
+style="rounded, filled";
+tooltip="assoc&#61;8&#10;\entry_size&#61;64&#10;\eventq_index&#61;0&#10;\size&#61;262144";
+}
+
+subgraph cluster_system_l2_tags_power_state {
+color="#000000";
+fillcolor="#84827c";
+fontcolor="#000000";
+fontname=Arial;
+fontsize=14;
+label="power_state \n: PowerState";
+shape=box;
+style="rounded, filled";
+tooltip="clk_gate_bins&#61;20&#10;\clk_gate_max&#61;1000000000000&#10;\clk_gate_min&#61;1000&#10;\default_state&#61;UNDEFINED&#10;\eventq_index&#61;0&#10;\leaders&#61;&#10;\possible_states&#61;";
+}
+
+}
+
+subgraph cluster_system_l2_replacement_policy {
+color="#000000";
+fillcolor="#9f9c95";
+fontcolor="#000000";
+fontname=Arial;
+fontsize=14;
+label="replacement_policy \n: LRURP";
+shape=box;
+style="rounded, filled";
+tooltip="eventq_index&#61;0";
+}
+
+subgraph cluster_system_l2_power_state {
+color="#000000";
+fillcolor="#9f9c95";
+fontcolor="#000000";
+fontname=Arial;
+fontsize=14;
+label="power_state \n: PowerState";
+shape=box;
+style="rounded, filled";
+tooltip="clk_gate_bins&#61;20&#10;\clk_gate_max&#61;1000000000000&#10;\clk_gate_min&#61;1000&#10;\default_state&#61;UNDEFINED&#10;\eventq_index&#61;0&#10;\leaders&#61;&#10;\possible_states&#61;";
+}
+
+}
+
+subgraph cluster_system_tol2bus {
+color="#000000";
+fillcolor="#6f798c";
+fontcolor="#000000";
+fontname=Arial;
+fontsize=14;
+label="tol2bus \n: L2XBar";
+shape=box;
+style="rounded, filled";
+tooltip="clk_domain&#61;system.cpu_clk_domain&#10;\eventq_index&#61;0&#10;\forward_latency&#61;0&#10;\frontend_latency&#61;1&#10;\header_latency&#61;1&#10;\max_outstanding_snoops&#61;512&#10;\max_routing_table_size&#61;512&#10;\point_of_coherency&#61;false&#10;\point_of_unification&#61;true&#10;\power_model&#61;&#10;\power_state&#61;system.tol2bus.power_state&#10;\response_latency&#61;1&#10;\snoop_filter&#61;system.tol2bus.snoop_filter&#10;\snoop_response_latency&#61;1&#10;\system&#61;system&#10;\use_default_range&#61;false&#10;\width&#61;32";
+system_tol2bus_cpu_side_ports [color="#000000", fillcolor="#586070", fontcolor="#000000", fontname=Arial, fontsize=14, label=cpu_side_ports, shape=box, style="rounded, filled"];
+system_tol2bus_mem_side_ports [color="#000000", fillcolor="#586070", fontcolor="#000000", fontname=Arial, fontsize=14, label=mem_side_ports, shape=box, style="rounded, filled"];
+subgraph cluster_system_tol2bus_snoop_filter {
+color="#000000";
+fillcolor="#bab6ae";
+fontcolor="#000000";
+fontname=Arial;
+fontsize=14;
+label="snoop_filter \n: SnoopFilter";
+shape=box;
+style="rounded, filled";
+tooltip="eventq_index&#61;0&#10;\lookup_latency&#61;0&#10;\max_capacity&#61;8388608&#10;\system&#61;system";
+}
+
+subgraph cluster_system_tol2bus_power_state {
+color="#000000";
+fillcolor="#bab6ae";
+fontcolor="#000000";
+fontname=Arial;
+fontsize=14;
+label="power_state \n: PowerState";
+shape=box;
+style="rounded, filled";
+tooltip="clk_gate_bins&#61;20&#10;\clk_gate_max&#61;1000000000000&#10;\clk_gate_min&#61;1000&#10;\default_state&#61;UNDEFINED&#10;\eventq_index&#61;0&#10;\leaders&#61;&#10;\possible_states&#61;";
+}
+
+}
+
 subgraph cluster_system_mem_ctrls {
 color="#000000";
 fillcolor="#bab6ae";
@@ -4129,45 +4241,14 @@ system_cpu7_icache_port -> system_cpu7_icache_cpu_side  [dir=forward];
 system_cpu7_dcache_port -> system_cpu7_dcache_cpu_side  [dir=forward];
 system_cpu7_mmu_itb_walker_port -> system_cpu7_itb_walker_cache_cpu_side  [dir=forward];
 system_cpu7_mmu_dtb_walker_port -> system_cpu7_dtb_walker_cache_cpu_side  [dir=forward];
-system_membus_cpu_side_ports -> system_cpu0_icache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu0_dcache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu0_itb_walker_cache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu0_dtb_walker_cache_mem_side  [dir=back];
+system_membus_cpu_side_ports -> system_l2_mem_side  [dir=back];
 system_membus_cpu_side_ports -> system_cpu0_interrupts_int_requestor  [dir=back];
-system_membus_cpu_side_ports -> system_cpu1_icache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu1_dcache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu1_itb_walker_cache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu1_dtb_walker_cache_mem_side  [dir=back];
 system_membus_cpu_side_ports -> system_cpu1_interrupts_int_requestor  [dir=back];
-system_membus_cpu_side_ports -> system_cpu2_icache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu2_dcache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu2_itb_walker_cache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu2_dtb_walker_cache_mem_side  [dir=back];
 system_membus_cpu_side_ports -> system_cpu2_interrupts_int_requestor  [dir=back];
-system_membus_cpu_side_ports -> system_cpu3_icache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu3_dcache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu3_itb_walker_cache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu3_dtb_walker_cache_mem_side  [dir=back];
 system_membus_cpu_side_ports -> system_cpu3_interrupts_int_requestor  [dir=back];
-system_membus_cpu_side_ports -> system_cpu4_icache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu4_dcache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu4_itb_walker_cache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu4_dtb_walker_cache_mem_side  [dir=back];
 system_membus_cpu_side_ports -> system_cpu4_interrupts_int_requestor  [dir=back];
-system_membus_cpu_side_ports -> system_cpu5_icache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu5_dcache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu5_itb_walker_cache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu5_dtb_walker_cache_mem_side  [dir=back];
 system_membus_cpu_side_ports -> system_cpu5_interrupts_int_requestor  [dir=back];
-system_membus_cpu_side_ports -> system_cpu6_icache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu6_dcache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu6_itb_walker_cache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu6_dtb_walker_cache_mem_side  [dir=back];
 system_membus_cpu_side_ports -> system_cpu6_interrupts_int_requestor  [dir=back];
-system_membus_cpu_side_ports -> system_cpu7_icache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu7_dcache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu7_itb_walker_cache_mem_side  [dir=back];
-system_membus_cpu_side_ports -> system_cpu7_dtb_walker_cache_mem_side  [dir=back];
 system_membus_cpu_side_ports -> system_cpu7_interrupts_int_requestor  [dir=back];
 system_membus_mem_side_ports -> system_cpu0_interrupts_pio  [dir=forward];
 system_membus_mem_side_ports -> system_cpu0_interrupts_int_responder  [dir=forward];
@@ -4186,4 +4267,37 @@ system_membus_mem_side_ports -> system_cpu6_interrupts_int_responder  [dir=forwa
 system_membus_mem_side_ports -> system_cpu7_interrupts_pio  [dir=forward];
 system_membus_mem_side_ports -> system_cpu7_interrupts_int_responder  [dir=forward];
 system_membus_mem_side_ports -> system_mem_ctrls_port  [dir=forward];
+system_tol2bus_cpu_side_ports -> system_cpu0_icache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu0_dcache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu0_itb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu0_dtb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu1_icache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu1_dcache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu1_itb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu1_dtb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu2_icache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu2_dcache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu2_itb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu2_dtb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu3_icache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu3_dcache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu3_itb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu3_dtb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu4_icache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu4_dcache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu4_itb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu4_dtb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu5_icache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu5_dcache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu5_itb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu5_dtb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu6_icache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu6_dcache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu6_itb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu6_dtb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu7_icache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu7_dcache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu7_itb_walker_cache_mem_side  [dir=back];
+system_tol2bus_cpu_side_ports -> system_cpu7_dtb_walker_cache_mem_side  [dir=back];
+system_tol2bus_mem_side_ports -> system_l2_cpu_side  [dir=forward];
 }

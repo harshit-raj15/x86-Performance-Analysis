@@ -147,7 +147,7 @@
                         "system": "system",
                         "int_requestor": {
                             "role": "GEM5 REQUESTOR",
-                            "peer": "system.membus.cpu_side_ports[5]",
+                            "peer": "system.membus.cpu_side_ports[2]",
                             "is_source": "True"
                         },
                         "int_responder": {
@@ -499,7 +499,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[2]",
+                        "peer": "system.tol2bus.cpu_side_ports[1]",
                         "is_source": "True"
                     }
                 },
@@ -605,7 +605,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[4]",
+                        "peer": "system.tol2bus.cpu_side_ports[3]",
                         "is_source": "True"
                     }
                 },
@@ -711,7 +711,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[1]",
+                        "peer": "system.tol2bus.cpu_side_ports[0]",
                         "is_source": "True"
                     }
                 },
@@ -817,7 +817,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[3]",
+                        "peer": "system.tol2bus.cpu_side_ports[2]",
                         "is_source": "True"
                     }
                 },
@@ -877,7 +877,7 @@
                         "system": "system",
                         "int_requestor": {
                             "role": "GEM5 REQUESTOR",
-                            "peer": "system.membus.cpu_side_ports[10]",
+                            "peer": "system.membus.cpu_side_ports[3]",
                             "is_source": "True"
                         },
                         "int_responder": {
@@ -1199,7 +1199,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[7]",
+                        "peer": "system.tol2bus.cpu_side_ports[5]",
                         "is_source": "True"
                     }
                 },
@@ -1305,7 +1305,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[9]",
+                        "peer": "system.tol2bus.cpu_side_ports[7]",
                         "is_source": "True"
                     }
                 },
@@ -1411,7 +1411,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[6]",
+                        "peer": "system.tol2bus.cpu_side_ports[4]",
                         "is_source": "True"
                     }
                 },
@@ -1517,7 +1517,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[8]",
+                        "peer": "system.tol2bus.cpu_side_ports[6]",
                         "is_source": "True"
                     }
                 },
@@ -1577,7 +1577,7 @@
                         "system": "system",
                         "int_requestor": {
                             "role": "GEM5 REQUESTOR",
-                            "peer": "system.membus.cpu_side_ports[15]",
+                            "peer": "system.membus.cpu_side_ports[4]",
                             "is_source": "True"
                         },
                         "int_responder": {
@@ -1899,7 +1899,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[12]",
+                        "peer": "system.tol2bus.cpu_side_ports[9]",
                         "is_source": "True"
                     }
                 },
@@ -2005,7 +2005,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[14]",
+                        "peer": "system.tol2bus.cpu_side_ports[11]",
                         "is_source": "True"
                     }
                 },
@@ -2111,7 +2111,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[11]",
+                        "peer": "system.tol2bus.cpu_side_ports[8]",
                         "is_source": "True"
                     }
                 },
@@ -2217,7 +2217,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[13]",
+                        "peer": "system.tol2bus.cpu_side_ports[10]",
                         "is_source": "True"
                     }
                 },
@@ -2277,7 +2277,7 @@
                         "system": "system",
                         "int_requestor": {
                             "role": "GEM5 REQUESTOR",
-                            "peer": "system.membus.cpu_side_ports[20]",
+                            "peer": "system.membus.cpu_side_ports[5]",
                             "is_source": "True"
                         },
                         "int_responder": {
@@ -2599,7 +2599,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[17]",
+                        "peer": "system.tol2bus.cpu_side_ports[13]",
                         "is_source": "True"
                     }
                 },
@@ -2705,7 +2705,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[19]",
+                        "peer": "system.tol2bus.cpu_side_ports[15]",
                         "is_source": "True"
                     }
                 },
@@ -2811,7 +2811,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[16]",
+                        "peer": "system.tol2bus.cpu_side_ports[12]",
                         "is_source": "True"
                     }
                 },
@@ -2917,7 +2917,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[18]",
+                        "peer": "system.tol2bus.cpu_side_ports[14]",
                         "is_source": "True"
                     }
                 },
@@ -2977,7 +2977,7 @@
                         "system": "system",
                         "int_requestor": {
                             "role": "GEM5 REQUESTOR",
-                            "peer": "system.membus.cpu_side_ports[25]",
+                            "peer": "system.membus.cpu_side_ports[6]",
                             "is_source": "True"
                         },
                         "int_responder": {
@@ -3299,7 +3299,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[22]",
+                        "peer": "system.tol2bus.cpu_side_ports[17]",
                         "is_source": "True"
                     }
                 },
@@ -3405,7 +3405,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[24]",
+                        "peer": "system.tol2bus.cpu_side_ports[19]",
                         "is_source": "True"
                     }
                 },
@@ -3511,7 +3511,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[21]",
+                        "peer": "system.tol2bus.cpu_side_ports[16]",
                         "is_source": "True"
                     }
                 },
@@ -3617,7 +3617,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[23]",
+                        "peer": "system.tol2bus.cpu_side_ports[18]",
                         "is_source": "True"
                     }
                 },
@@ -3677,7 +3677,7 @@
                         "system": "system",
                         "int_requestor": {
                             "role": "GEM5 REQUESTOR",
-                            "peer": "system.membus.cpu_side_ports[30]",
+                            "peer": "system.membus.cpu_side_ports[7]",
                             "is_source": "True"
                         },
                         "int_responder": {
@@ -3999,7 +3999,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[27]",
+                        "peer": "system.tol2bus.cpu_side_ports[21]",
                         "is_source": "True"
                     }
                 },
@@ -4105,7 +4105,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[29]",
+                        "peer": "system.tol2bus.cpu_side_ports[23]",
                         "is_source": "True"
                     }
                 },
@@ -4211,7 +4211,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[26]",
+                        "peer": "system.tol2bus.cpu_side_ports[20]",
                         "is_source": "True"
                     }
                 },
@@ -4317,7 +4317,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[28]",
+                        "peer": "system.tol2bus.cpu_side_ports[22]",
                         "is_source": "True"
                     }
                 },
@@ -4377,7 +4377,7 @@
                         "system": "system",
                         "int_requestor": {
                             "role": "GEM5 REQUESTOR",
-                            "peer": "system.membus.cpu_side_ports[35]",
+                            "peer": "system.membus.cpu_side_ports[8]",
                             "is_source": "True"
                         },
                         "int_responder": {
@@ -4699,7 +4699,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[32]",
+                        "peer": "system.tol2bus.cpu_side_ports[25]",
                         "is_source": "True"
                     }
                 },
@@ -4805,7 +4805,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[34]",
+                        "peer": "system.tol2bus.cpu_side_ports[27]",
                         "is_source": "True"
                     }
                 },
@@ -4911,7 +4911,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[31]",
+                        "peer": "system.tol2bus.cpu_side_ports[24]",
                         "is_source": "True"
                     }
                 },
@@ -5017,7 +5017,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[33]",
+                        "peer": "system.tol2bus.cpu_side_ports[26]",
                         "is_source": "True"
                     }
                 },
@@ -5077,7 +5077,7 @@
                         "system": "system",
                         "int_requestor": {
                             "role": "GEM5 REQUESTOR",
-                            "peer": "system.membus.cpu_side_ports[40]",
+                            "peer": "system.membus.cpu_side_ports[9]",
                             "is_source": "True"
                         },
                         "int_responder": {
@@ -5399,7 +5399,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[37]",
+                        "peer": "system.tol2bus.cpu_side_ports[29]",
                         "is_source": "True"
                     }
                 },
@@ -5505,7 +5505,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[39]",
+                        "peer": "system.tol2bus.cpu_side_ports[31]",
                         "is_source": "True"
                     }
                 },
@@ -5611,7 +5611,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[36]",
+                        "peer": "system.tol2bus.cpu_side_ports[28]",
                         "is_source": "True"
                     }
                 },
@@ -5717,7 +5717,7 @@
                     },
                     "mem_side": {
                         "role": "GEM5 REQUESTOR",
-                        "peer": "system.membus.cpu_side_ports[38]",
+                        "peer": "system.tol2bus.cpu_side_ports[30]",
                         "is_source": "True"
                     }
                 },
@@ -5766,6 +5766,112 @@
             "eventq_index": 0,
             "sys_clk_domain": "system.clk_domain",
             "transition_latency": 100000000
+        },
+        "l2": {
+            "type": "Cache",
+            "cxx_class": "gem5::Cache",
+            "name": "l2",
+            "path": "system.l2",
+            "addr_ranges": [
+                "0:18446744073709551615"
+            ],
+            "assoc": 8,
+            "clk_domain": "system.cpu_clk_domain",
+            "clusivity": "mostly_incl",
+            "compressor": null,
+            "data_latency": 20,
+            "demand_mshr_reserve": 1,
+            "eventq_index": 0,
+            "is_read_only": false,
+            "max_miss_count": 0,
+            "move_contractions": true,
+            "mshrs": 20,
+            "partitioning_manager": null,
+            "power_model": [],
+            "power_state": {
+                "type": "PowerState",
+                "cxx_class": "gem5::PowerState",
+                "name": "power_state",
+                "path": "system.l2.power_state",
+                "clk_gate_bins": 20,
+                "clk_gate_max": 1000000000000,
+                "clk_gate_min": 1000,
+                "default_state": "UNDEFINED",
+                "eventq_index": 0,
+                "leaders": [],
+                "possible_states": []
+            },
+            "prefetcher": null,
+            "replace_expansions": true,
+            "replacement_policy": {
+                "type": "LRURP",
+                "cxx_class": "gem5::replacement_policy::LRU",
+                "name": "replacement_policy",
+                "path": "system.l2.replacement_policy",
+                "eventq_index": 0
+            },
+            "response_latency": 20,
+            "sequential_access": false,
+            "size": 262144,
+            "system": "system",
+            "tag_latency": 20,
+            "tags": {
+                "type": "BaseSetAssoc",
+                "cxx_class": "gem5::BaseSetAssoc",
+                "name": "tags",
+                "path": "system.l2.tags",
+                "assoc": 8,
+                "block_size": 64,
+                "clk_domain": "system.cpu_clk_domain",
+                "entry_size": 64,
+                "eventq_index": 0,
+                "indexing_policy": {
+                    "type": "TaggedSetAssociative",
+                    "cxx_class": "gem5::TaggedSetAssociative",
+                    "name": "indexing_policy",
+                    "path": "system.l2.tags.indexing_policy",
+                    "assoc": 8,
+                    "entry_size": 64,
+                    "eventq_index": 0,
+                    "size": 262144
+                },
+                "partitioning_manager": null,
+                "power_model": [],
+                "power_state": {
+                    "type": "PowerState",
+                    "cxx_class": "gem5::PowerState",
+                    "name": "power_state",
+                    "path": "system.l2.tags.power_state",
+                    "clk_gate_bins": 20,
+                    "clk_gate_max": 1000000000000,
+                    "clk_gate_min": 1000,
+                    "default_state": "UNDEFINED",
+                    "eventq_index": 0,
+                    "leaders": [],
+                    "possible_states": []
+                },
+                "replacement_policy": "system.l2.replacement_policy",
+                "sequential_access": false,
+                "size": 262144,
+                "system": "system",
+                "tag_latency": 20,
+                "warmup_percentage": 0
+            },
+            "tgts_per_mshr": 12,
+            "warmup_percentage": 0,
+            "write_allocator": null,
+            "write_buffers": 8,
+            "writeback_clean": false,
+            "cpu_side": {
+                "role": "GEM5 RESPONDER",
+                "peer": "system.tol2bus.mem_side_ports[0]",
+                "is_source": "False"
+            },
+            "mem_side": {
+                "role": "GEM5 REQUESTOR",
+                "peer": "system.membus.cpu_side_ports[1]",
+                "is_source": "True"
+            }
         },
         "mem_ctrls": [
             {
@@ -5979,45 +6085,14 @@
                 "role": "GEM5 RESPONDER",
                 "peer": [
                     "system.system_port",
-                    "system.cpu0.icache.mem_side",
-                    "system.cpu0.dcache.mem_side",
-                    "system.cpu0.itb_walker_cache.mem_side",
-                    "system.cpu0.dtb_walker_cache.mem_side",
+                    "system.l2.mem_side",
                     "system.cpu0.interrupts.int_requestor",
-                    "system.cpu1.icache.mem_side",
-                    "system.cpu1.dcache.mem_side",
-                    "system.cpu1.itb_walker_cache.mem_side",
-                    "system.cpu1.dtb_walker_cache.mem_side",
                     "system.cpu1.interrupts.int_requestor",
-                    "system.cpu2.icache.mem_side",
-                    "system.cpu2.dcache.mem_side",
-                    "system.cpu2.itb_walker_cache.mem_side",
-                    "system.cpu2.dtb_walker_cache.mem_side",
                     "system.cpu2.interrupts.int_requestor",
-                    "system.cpu3.icache.mem_side",
-                    "system.cpu3.dcache.mem_side",
-                    "system.cpu3.itb_walker_cache.mem_side",
-                    "system.cpu3.dtb_walker_cache.mem_side",
                     "system.cpu3.interrupts.int_requestor",
-                    "system.cpu4.icache.mem_side",
-                    "system.cpu4.dcache.mem_side",
-                    "system.cpu4.itb_walker_cache.mem_side",
-                    "system.cpu4.dtb_walker_cache.mem_side",
                     "system.cpu4.interrupts.int_requestor",
-                    "system.cpu5.icache.mem_side",
-                    "system.cpu5.dcache.mem_side",
-                    "system.cpu5.itb_walker_cache.mem_side",
-                    "system.cpu5.dtb_walker_cache.mem_side",
                     "system.cpu5.interrupts.int_requestor",
-                    "system.cpu6.icache.mem_side",
-                    "system.cpu6.dcache.mem_side",
-                    "system.cpu6.itb_walker_cache.mem_side",
-                    "system.cpu6.dtb_walker_cache.mem_side",
                     "system.cpu6.interrupts.int_requestor",
-                    "system.cpu7.icache.mem_side",
-                    "system.cpu7.dcache.mem_side",
-                    "system.cpu7.itb_walker_cache.mem_side",
-                    "system.cpu7.dtb_walker_cache.mem_side",
                     "system.cpu7.interrupts.int_requestor"
                 ],
                 "is_source": "False"
@@ -6042,6 +6117,95 @@
                     "system.cpu7.interrupts.pio",
                     "system.cpu7.interrupts.int_responder",
                     "system.mem_ctrls.port"
+                ],
+                "is_source": "True"
+            }
+        },
+        "tol2bus": {
+            "type": "CoherentXBar",
+            "cxx_class": "gem5::CoherentXBar",
+            "name": "tol2bus",
+            "path": "system.tol2bus",
+            "clk_domain": "system.cpu_clk_domain",
+            "eventq_index": 0,
+            "forward_latency": 0,
+            "frontend_latency": 1,
+            "header_latency": 1,
+            "max_outstanding_snoops": 512,
+            "max_routing_table_size": 512,
+            "point_of_coherency": false,
+            "point_of_unification": true,
+            "power_model": [],
+            "power_state": {
+                "type": "PowerState",
+                "cxx_class": "gem5::PowerState",
+                "name": "power_state",
+                "path": "system.tol2bus.power_state",
+                "clk_gate_bins": 20,
+                "clk_gate_max": 1000000000000,
+                "clk_gate_min": 1000,
+                "default_state": "UNDEFINED",
+                "eventq_index": 0,
+                "leaders": [],
+                "possible_states": []
+            },
+            "response_latency": 1,
+            "snoop_filter": {
+                "type": "SnoopFilter",
+                "cxx_class": "gem5::SnoopFilter",
+                "name": "snoop_filter",
+                "path": "system.tol2bus.snoop_filter",
+                "eventq_index": 0,
+                "lookup_latency": 0,
+                "max_capacity": 8388608,
+                "system": "system"
+            },
+            "snoop_response_latency": 1,
+            "system": "system",
+            "use_default_range": false,
+            "width": 32,
+            "cpu_side_ports": {
+                "role": "GEM5 RESPONDER",
+                "peer": [
+                    "system.cpu0.icache.mem_side",
+                    "system.cpu0.dcache.mem_side",
+                    "system.cpu0.itb_walker_cache.mem_side",
+                    "system.cpu0.dtb_walker_cache.mem_side",
+                    "system.cpu1.icache.mem_side",
+                    "system.cpu1.dcache.mem_side",
+                    "system.cpu1.itb_walker_cache.mem_side",
+                    "system.cpu1.dtb_walker_cache.mem_side",
+                    "system.cpu2.icache.mem_side",
+                    "system.cpu2.dcache.mem_side",
+                    "system.cpu2.itb_walker_cache.mem_side",
+                    "system.cpu2.dtb_walker_cache.mem_side",
+                    "system.cpu3.icache.mem_side",
+                    "system.cpu3.dcache.mem_side",
+                    "system.cpu3.itb_walker_cache.mem_side",
+                    "system.cpu3.dtb_walker_cache.mem_side",
+                    "system.cpu4.icache.mem_side",
+                    "system.cpu4.dcache.mem_side",
+                    "system.cpu4.itb_walker_cache.mem_side",
+                    "system.cpu4.dtb_walker_cache.mem_side",
+                    "system.cpu5.icache.mem_side",
+                    "system.cpu5.dcache.mem_side",
+                    "system.cpu5.itb_walker_cache.mem_side",
+                    "system.cpu5.dtb_walker_cache.mem_side",
+                    "system.cpu6.icache.mem_side",
+                    "system.cpu6.dcache.mem_side",
+                    "system.cpu6.itb_walker_cache.mem_side",
+                    "system.cpu6.dtb_walker_cache.mem_side",
+                    "system.cpu7.icache.mem_side",
+                    "system.cpu7.dcache.mem_side",
+                    "system.cpu7.itb_walker_cache.mem_side",
+                    "system.cpu7.dtb_walker_cache.mem_side"
+                ],
+                "is_source": "False"
+            },
+            "mem_side_ports": {
+                "role": "GEM5 REQUESTOR",
+                "peer": [
+                    "system.l2.cpu_side"
                 ],
                 "is_source": "True"
             }

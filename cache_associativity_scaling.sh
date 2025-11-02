@@ -33,6 +33,7 @@ for assoc in "${ASSOC_COUNTS[@]}"; do
     -c $WORKLOAD \
     --num-cpus=$CPU_COUNT \
     --caches \
+    --l2cache \
     --l1d_size=$L1D_SIZE \
     --l1i_size=$L1I_SIZE \
     --l2_size=$L2_SIZE \

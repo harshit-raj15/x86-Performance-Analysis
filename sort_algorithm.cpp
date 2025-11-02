@@ -72,7 +72,7 @@ void parallelMergeSort(std::vector<int>& arr, int left, int right) {
 // --- Main Function for Benchmark ---
 int main() {
     // --- Create a large, random vector ---
-    int n = 100000;
+    int n = 1000000;
     std::vector<int> arr(n);
     srand(time(NULL)); // Seed the random number generator
 

@@ -1,262 +1,301 @@
-import glob
+#!/usr/bin/env python3
+
 import os
 import re
-
-import matplotlib.colors as colors
 import matplotlib.pyplot as plt
 import numpy as np
 
-# --- Configuration ---
-STATS_DIR = "m5out"
+# Directory
+STATS_DIR = "m5out/"
 
-L1D_SIZES_LIST = ["16kB", "32kB", "64kB", "128kB"]
-L2_SIZES_LIST = ["128kB", "256kB", "512kB", "1MB"]
-ASSOC_LIST = [1, 2, 4, 8]
-CORES_LIST = [2, 4, 8, 16]
-
-
-# --- Regex for Filenames ---
-RE_CORE = re.compile(r"stats_cores_(\d+).txt")
-RE_ASSOC = re.compile(r"stats_assoc_(\d+).txt")
-RE_SIZE = re.compile(r"stats_l1_([\w+]+)_l2_([\w+]+).txt")
-
-# --- Regex for Stats ---
-STAT_PATTERNS = {
-    "seconds": re.compile(
-        r"system.cpu.exec_context.thread_0.simSeconds\s+([\d\.]+)"
-    ),
-    "ticks": re.compile(r"simTicks\s+(\d+)"),
-    "l1d_miss_rate": re.compile(
-        r"system.cpu0.dcache.overall_miss_rate\s+([\d\.]+)"
-    ),
-    "l2_miss_rate": re.compile(r"system.l2.overall_miss_rate\s+([\d\.]+)"),
+# Regex to extract stats
+STATS_TO_PARSE = {
+    "sim_seconds": re.compile(r"simSeconds\s+(\d+\.\d+)"),
+    "sim_ticks": re.compile(r"simTicks\s+(\d+)"),
+    # We use cpu0's dcache as the representative L1D cache
+    "l1d_miss_rate": re.compile(r"system.cpu0.dcache.overallMissRate::total\s+(\d+\.\d+)"),
+    "l2_miss_rate": re.compile(r"system.l2.overallMissRate::total\s+(\d+\.\d+)"),
 }
 
-
-def parse_stats_file(filepath):
-    metrics = {}
-    try:
-        with open(filepath) as f:
-            content = f.read()
-            for key, pattern in STAT_PATTERNS.items():
-                match = pattern.search(content)
-                if match:
-                    metrics[key] = float(match.group(1))
-    except Exception as e:
-        print(f"Warning: Error parsing {filepath}: {e}")
+# Parsing Stats
+def parse_stats(filepath):
+    results = {}
+    if not os.path.exists(filepath):
+        print(f"Warning: File not found {filepath}")
         return None
-    return metrics
 
+    with open(filepath, 'r') as f:
+        content = f.read()
+    
+    for key, regex in STATS_TO_PARSE.items():
+        match = regex.search(content)
+        if match:
+            results[key] = float(match.group(1))
+        else:
+            if key != "l1d_miss_rate" and "system.cpu0.dcache.overallMissRate" not in content:
+                 print(f"Warning: Could not find stat '{key}' in {filepath}")
+            results[key] = None
+            
+    if "l1d_miss_rate" not in results or results["l1d_miss_rate"] is None:
+        l1d_match = STATS_TO_PARSE["l1d_miss_rate"].search(content)
+        if l1d_match:
+            results["l1d_miss_rate"] = float(l1d_match.group(1))
+        else:
+            if "system.cpu0.dcache.overallMissRate" not in content:
+                pass
+            else:
+                print(f"Warning: Could not find stat 'l1d_miss_rate' in {filepath}")
+            results["l1d_miss_rate"] = None
 
-def plot_core_scaling(data):
-    if not data:
-        print("No core scaling data found to plot.")
+    return results
+
+# Core Scaling Plots
+def plot_core_scaling_time():
+
+    print("Generating Core Scaling vs. Time Plot")
+    cpu_counts = [2, 4, 8, 16]
+    sim_seconds = []
+
+    for cpus in cpu_counts:
+        filepath = os.path.join(STATS_DIR, f"stats_cores_{cpus}.txt")
+        stats = parse_stats(filepath)
+        if stats and stats.get("sim_seconds"):
+            sim_seconds.append(stats["sim_seconds"])
+        else:
+            sim_seconds.append(np.nan)
+
+    if all(np.isnan(sim_seconds)):
+        print("Error: No data for core scaling time. Skipping plot.")
         return
 
-    print("Plotting core scaling...")
-    sorted_cores = sorted(data.keys())
-    times = [data[c].get("seconds", np.nan) for c in sorted_cores]
-    ticks = [data[c].get("ticks", np.nan) for c in sorted_cores]
-
-    # Plot 1: Cores vs. Time
-    plt.figure(figsize=(10, 6))
-    plt.plot(sorted_cores, times, marker="o", linestyle="-")
-    plt.title("CPU Cores vs Execution Time")
+    plt.figure()
+    plt.plot(cpu_counts, sim_seconds, color='red', linestyle='-', marker='o')
+    plt.title("Core Scaling vs. Simulation Time")
     plt.xlabel("Number of CPU Cores")
-    plt.ylabel("Execution Time (seconds)")
-    plt.grid(True)
-    plt.xticks(sorted_cores)
+    plt.ylabel("Simulation Time (s)")
+    plt.xticks(cpu_counts)
+    plt.grid(True, linestyle=':')
     plt.savefig("cores_vs_time.png")
     plt.close()
+    print("Saved cores_vs_time.png")
 
-    # Plot 2: Cores vs. Ticks
-    plt.figure(figsize=(10, 6))
-    plt.plot(sorted_cores, ticks, marker="o", linestyle="-", color="r")
-    plt.title("CPU Cores vs Total Ticks")
-    plt.xlabel("Number of CPU Cores")
-    plt.ylabel("Total Simulation Ticks")
-    plt.grid(True)
-    plt.xticks(sorted_cores)
-    plt.savefig("cores_vs_ticks.png")
-    plt.close()
+def plot_core_scaling_ticks():
 
+    print("Generating Core Scaling vs. Ticks Plot")
+    cpu_counts = [2, 4, 8, 16]
+    sim_ticks = []
 
-def plot_assoc_scaling(data):
-    if not data:
-        print("No associativity scaling data found to plot.")
+    for cpus in cpu_counts:
+        filepath = os.path.join(STATS_DIR, f"stats_cores_{cpus}.txt")
+        stats = parse_stats(filepath)
+        if stats and stats.get("sim_ticks"):
+            sim_ticks.append(stats["sim_ticks"])
+        else:
+            sim_ticks.append(np.nan)
+
+    if all(np.isnan(sim_ticks)):
+        print("Error: No data for core scaling ticks. Skipping plot.")
         return
 
-    print("Plotting associativity scaling...")
-    sorted_assoc = sorted(data.keys())
-    ticks = [data[a].get("ticks", np.nan) for a in sorted_assoc]
-    l1d_miss = [data[a].get("l1d_miss_rate", np.nan) for a in sorted_assoc]
-    l2_miss = [data[a].get("l2_miss_rate", np.nan) for a in sorted_assoc]
+    plt.figure()
+    plt.plot(cpu_counts, sim_ticks, color='red', linestyle='-', marker='o')
+    plt.title("Core Scaling vs. Simulation Ticks")
+    plt.xlabel("Number of CPU Cores")
+    plt.ylabel("Simulation Ticks")
+    plt.xticks(cpu_counts)
+    plt.grid(True, linestyle=':')
+    plt.savefig("cores_vs_ticks.png")
+    plt.close()
+    print("Saved cores_vs_ticks.png")
 
-    # Plot 1: Assoc vs. Ticks
-    plt.figure(figsize=(10, 6))
-    plt.plot(sorted_assoc, ticks, marker="o", linestyle="-")
-    plt.title("Cache Associativity vs Total Ticks (8 Cores)")
+# Associativity Scaling Plots
+def plot_associativity_ticks():
+
+    print("Generating Associativity vs. Ticks Plot")
+    assoc_counts = [1, 2, 4, 8]
+    sim_ticks = []
+
+    for assoc in assoc_counts:
+        filepath = os.path.join(STATS_DIR, f"stats_assoc_{assoc}.txt")
+        stats = parse_stats(filepath)  
+        if stats:
+            value = stats.get("sim_ticks")
+            sim_ticks.append(value if value is not None else np.nan)
+        else:
+            sim_ticks.append(np.nan)
+
+    if all(np.isnan(sim_ticks)):
+        print("Error: No data for assoc ticks. Skipping plot.")
+        return
+
+    plt.figure()
+    plt.plot(assoc_counts, sim_ticks, marker='o', linestyle='-')
+    plt.title("Cache Associativity vs. Simulation Ticks (8 Cores)")
     plt.xlabel("L1/L2 Associativity")
-    plt.ylabel("Total Simulation Ticks")
-    plt.grid(True)
-    plt.xticks(sorted_assoc)
+    plt.ylabel("Simulation Ticks")
+    plt.xticks(assoc_counts)
+    plt.grid(True, linestyle=':')
     plt.savefig("assoc_vs_ticks.png")
     plt.close()
+    print("Saved assoc_vs_ticks.png")
 
-    # Plot 2: Assoc vs. L1D Miss Rate
-    plt.figure(figsize=(10, 6))
-    plt.plot(sorted_assoc, l1d_miss, marker="o", linestyle="-", color="g")
-    plt.title("Cache Associativity vs L1D Miss Rate (8 Cores)")
+def plot_associativity_l1d_miss():
+    print("Generating Associativity vs. L1D Miss Rate Plot")
+    assoc_counts = [1, 2, 4, 8]
+    l1d_miss_rates = []
+
+    for assoc in assoc_counts:
+        filepath = os.path.join(STATS_DIR, f"stats_assoc_{assoc}.txt")
+        stats = parse_stats(filepath)
+        if stats:
+            value = stats.get("l1d_miss_rate")
+            l1d_miss_rates.append(value if value is not None else np.nan)
+        else:
+            l1d_miss_rates.append(np.nan)
+
+    if all(np.isnan(l1d_miss_rates)):
+        print("Error: No data for assoc L1D miss rate. Skipping plot.")
+        return
+
+    plt.figure()
+    plt.plot(assoc_counts, l1d_miss_rates, marker='o', linestyle='-')
+    plt.title("Cache Associativity vs. L1D Miss Rate (8 Cores)")
     plt.xlabel("L1/L2 Associativity")
-    plt.ylabel("L1D Miss Rate (cpu0.dcache)")
-    plt.grid(True)
-    plt.xticks(sorted_assoc)
+    plt.ylabel("L1D Miss Rate (cpu0)")
+    plt.xticks(assoc_counts)
+    plt.grid(True, linestyle=':')
     plt.savefig("assoc_vs_l1d_miss.png")
     plt.close()
+    print("Saved assoc_vs_l1d_miss.png")
 
-    # Plot 3: Assoc vs. L2 Miss Rate
-    plt.figure(figsize=(10, 6))
-    plt.plot(sorted_assoc, l2_miss, marker="o", linestyle="-", color="purple")
-    plt.title("Cache Associativity vs L2 Miss Rate (8 Cores)")
+def plot_associativity_l2_miss():
+    print("Generating Associativity vs. L2 Miss Rate Plot")
+    assoc_counts = [1, 2, 4, 8]
+    l2_miss_rates = []
+    for assoc in assoc_counts:
+        filepath = os.path.join(STATS_DIR, f"stats_assoc_{assoc}.txt")
+        stats = parse_stats(filepath)
+        
+        if stats:
+            value = stats.get("l2_miss_rate")
+            l2_miss_rates.append(value if value is not None else np.nan)
+        else:
+            l2_miss_rates.append(np.nan)
+
+    if all(np.isnan(l2_miss_rates)):
+        print("Error: No data for assoc L2 miss rate. Skipping plot.")
+        return
+
+    plt.figure()
+    plt.plot(assoc_counts, l2_miss_rates, marker='o', linestyle='-')
+    plt.title("Cache Associativity vs. L2 Miss Rate (8 Cores)")
     plt.xlabel("L1/L2 Associativity")
-    plt.ylabel("L2 Miss Rate (system.l2)")
-    plt.grid(True)
-    plt.xticks(sorted_assoc)
+    plt.ylabel("L2 Overall Miss Rate")
+    plt.xticks(assoc_counts)
+    plt.grid(True, linestyle=':')
     plt.savefig("assoc_vs_l2_miss.png")
     plt.close()
+    print("Saved assoc_vs_l2_miss.png")
 
 
-def plot_heatmap(data, title, filename, x_labels, y_labels, metric_label):
-    plt.figure(figsize=(12, 8))
-    # Use logarithmic color scale for ticks, linear for miss rates
-    norm = None
-    if "Ticks" in metric_label:
-        norm = colors.LogNorm(vmin=data.min(), vmax=data.max())
+# Cache Size Scaling Plots
+def _generate_heatmap(data_grid, title, cbar_label, filename, l1d_sizes, l2_sizes):
+    """Helper function to create a heatmap."""
+    if np.isnan(data_grid).all():
+        print(f"Error: No data for {title}. Skipping plot.")
+        return
 
-    c = plt.imshow(data, cmap="viridis", aspect="auto", norm=norm)
+    plt.figure(figsize=(8, 6))
+    plt.imshow(data_grid, cmap='viridis_r', interpolation='nearest')
+    
+    cbar = plt.colorbar()
+    cbar.set_label(cbar_label)
+
     plt.title(title)
     plt.xlabel("L2 Cache Size")
     plt.ylabel("L1D Cache Size")
-
-    # Set labels
-    plt.xticks(np.arange(len(x_labels)), x_labels)
-    plt.yticks(np.arange(len(y_labels)), y_labels)
-
+    plt.xticks(np.arange(len(l2_sizes)), labels=l2_sizes)
+    plt.yticks(np.arange(len(l1d_sizes)), labels=l1d_sizes)
+    
     # Add text annotations
-    for i in range(len(y_labels)):
-        for j in range(len(x_labels)):
-            val = data[i, j]
-            text = f"{val:.2e}" if "Ticks" in metric_label else f"{val:.4f}"
-            plt.text(
-                j, i, text, ha="center", va="center", color="white", fontsize=8
-            )
+    for i in range(len(l1d_sizes)):
+        for j in range(len(l2_sizes)):
+            value = data_grid[i, j]
+            if not np.isnan(value):
+                # Determine text color based on background brightness
+                threshold = data_grid[~np.isnan(data_grid)].max() / 2.
+                text_color = "white" if value > threshold else "black"
+                plt.text(j, i, f"{value:.4f}", ha="center", va="center", color=text_color)
 
-    plt.colorbar(c, label=metric_label)
     plt.savefig(filename)
     plt.close()
+    print(f"Saved {filename}")
+
+def plot_cache_size_scaling():
+    """
+    Parses cache size data and generates heatmaps for ticks,
+    L1D miss rate, and L2 miss rate.
+    """
+    print("Generating Cache Size Scaling Plots...")
+    l1d_sizes = ["16kB", "32kB", "64kB", "128kB"]
+    l2_sizes = ["128kB", "256kB", "512kB", "1MB"]
+    
+    # Create 2D grids for each stat
+    ticks_grid = np.full((len(l1d_sizes), len(l2_sizes)), np.nan)
+    l1d_miss_grid = np.full((len(l1d_sizes), len(l2_sizes)), np.nan)
+    l2_miss_grid = np.full((len(l1d_sizes), len(l2_sizes)), np.nan)
+
+    for i, l1 in enumerate(l1d_sizes):
+        for j, l2 in enumerate(l2_sizes):
+            filepath = os.path.join(STATS_DIR, f"stats_size_l1_{l1}_l2_{l2}.txt")
+            stats = parse_stats(filepath)
+            
+            if stats:
+                ticks_val = stats.get("sim_ticks")
+                l1d_val = stats.get("l1d_miss_rate")
+                l2_val = stats.get("l2_miss_rate")
+                
+                ticks_grid[i, j] = ticks_val if ticks_val is not None else np.nan
+                l1d_miss_grid[i, j] = l1d_val if l1d_val is not None else np.nan
+                l2_miss_grid[i, j] = l2_val if l2_val is not None else np.nan
+            # No 'else' needed, grid is pre-filled with np.nan
+
+    # Generate the 3 heatmaps
+    _generate_heatmap(ticks_grid, "Cache Size vs. Sim Ticks (8 Cores)", 
+                      "Simulation Ticks", "cache_size_vs_ticks_heatmap.png",
+                      l1d_sizes, l2_sizes)
+    
+    _generate_heatmap(l1d_miss_grid, "Cache Size vs. L1D Miss Rate (8 Cores)", 
+                      "L1D Miss Rate (cpu0)", "cache_size_vs_l1d_miss_heatmap.png",
+                      l1d_sizes, l2_sizes)
+    
+    _generate_heatmap(l2_miss_grid, "Cache Size vs. L2 Miss Rate (8 Cores)",
+                      "L2 Overall Miss Rate", "cache_size_vs_l2_miss_heatmap.png",
+                      l1d_sizes, l2_sizes)
 
 
-def plot_size_scaling(data):
-    """Generates heatmaps for cache size scaling."""
-    if not data:
-        print("No cache size scaling data found to plot.")
-        return
-
-    print("Plotting cache size scaling (heatmaps)...")
-
-    # Create 2D numpy arrays to hold the data for the heatmaps
-    # Rows: L1D Size, Cols: L2 Size
-    grid_ticks = np.full((len(L1D_SIZES_LIST), len(L2_SIZES_LIST)), np.nan)
-    grid_l1d_miss = np.full((len(L1D_SIZES_LIST), len(L2_SIZES_LIST)), np.nan)
-    grid_l2_miss = np.full((len(L1D_SIZES_LIST), len(L2_SIZES_LIST)), np.nan)
-
-    # Populate the grids
-    for i, l1 in enumerate(L1D_SIZES_LIST):
-        for j, l2 in enumerate(L2_SIZES_LIST):
-            key = f"{l1}_{l2}"
-            if key in data:
-                grid_ticks[i, j] = data[key].get("ticks", np.nan)
-                grid_l1d_miss[i, j] = data[key].get("l1d_miss_rate", np.nan)
-                grid_l2_miss[i, j] = data[key].get("l2_miss_rate", np.nan)
-
-    # Create plots
-    plot_heatmap(
-        grid_ticks,
-        "Total Ticks vs. L1D/L2 Cache Sizes (8 Cores, Assoc=4)",
-        "cache_size_vs_ticks_heatmap.png",
-        L2_SIZES_LIST,
-        L1D_SIZES_LIST,
-        "Total Simulation Ticks (Log Scale)",
-    )
-
-    plot_heatmap(
-        grid_l1d_miss,
-        "L1D Miss Rate vs. L1D/L2 Cache Sizes (8 Cores, Assoc=4)",
-        "cache_size_vs_l1d_miss_heatmap.png",
-        L2_SIZES_LIST,
-        L1D_SIZES_LIST,
-        "L1D Miss Rate (cpu0.dcache)",
-    )
-
-    plot_heatmap(
-        grid_l2_miss,
-        "L2 Miss Rate vs. L1D/L2 Cache Sizes (8 Cores, Assoc=4)",
-        "cache_size_vs_l2_miss_heatmap.png",
-        L2_SIZES_LIST,
-        L1D_SIZES_LIST,
-        "L2 Miss Rate (system.l2)",
-    )
-
-
-def main():
-    print(f"--- Starting Full Experiment Plotter ---")
-    print(f"Scanning for stats files in '{STATS_DIR}'...")
-
-    core_data = {}
-    assoc_data = {}
-    size_data = {}
-
-    all_stats_files = glob.glob(os.path.join(STATS_DIR, "stats_*.txt"))
-
-    if not all_stats_files:
-        print(f"\nError: No 'stats_*.txt' files found in '{STATS_DIR}'.")
-        print("Please run your simulation scripts first.\n")
-        return
-
-    print(f"Found {len(all_stats_files)} stats files. Parsing...")
-
-    for filepath in all_stats_files:
-        filename = os.path.basename(filepath)
-        metrics = parse_stats_file(filepath)
-        if not metrics:
-            continue
-
-        # Match each pattern
-        match_core = RE_CORE.match(filename)
-        match_assoc = RE_ASSOC.match(filename)
-        match_size = RE_SIZE.match(filename)
-
-        if match_core:
-            cores = int(match_core.group(1))
-            core_data[cores] = metrics
-
-        elif match_assoc:
-            assoc = int(match_assoc.group(1))
-            assoc_data[assoc] = metrics
-
-        elif match_size:
-            l1 = match_size.group(1)
-            l2 = match_size.group(2)
-            key = f"{l1}_{l2}"
-            size_data[key] = metrics
-
-    # --- Generate all plots ---
-    plot_core_scaling(core_data)
-    plot_assoc_scaling(assoc_data)
-    plot_size_scaling(size_data)
-
-    print("\n--- All plots generated successfully in your project folder! ---")
-
+# --- Main Execution ---
 
 if __name__ == "__main__":
-    main()
+    print("--- Starting Plot Generation ---")
+    
+    # Ensure matplotlib is installed
+    try:
+        import matplotlib
+    except ImportError:
+        print("Error: matplotlib is not installed. Please install it with 'pip3 install matplotlib numpy'")
+        exit(1)
+        
+    # Core Scaling Plots
+    plot_core_scaling_time()
+    plot_core_scaling_ticks()
+    
+    # Associativity Scaling Plots
+    plot_associativity_ticks()
+    plot_associativity_l1d_miss()
+    plot_associativity_l2_miss()
+
+    # Cache Size Scaling Plots
+    plot_cache_size_scaling()
+    
+    print("--- All Plots Generated Successfully ---")

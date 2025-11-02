@@ -34,6 +34,7 @@ for l1 in "${L1D_SIZES[@]}"; do
       -c $WORKLOAD \
       --num-cpus=$CPU_COUNT \
       --caches \
+      --l2cache \
       --l1d_size=$l1 \
       --l1i_size=$L1I_SIZE \
       --l2_size=$l2 \
