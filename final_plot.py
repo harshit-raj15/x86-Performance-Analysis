@@ -77,7 +77,7 @@ def plot_core_scaling_time():
     plt.xticks(cpu_counts)
     plt.grid(True, linestyle=':')
     save_path = os.path.join(OUTPUT_DIR, "cores_vs_time.png")
-    plt.savefig(save_path)
+    plt.savefig(save_path, bbox_inches='tight')
     plt.close()
     print(f"Saved {save_path}")
 
@@ -107,7 +107,7 @@ def plot_core_scaling_ticks():
     plt.xticks(cpu_counts)
     plt.grid(True, linestyle=':')
     save_path = os.path.join(OUTPUT_DIR, "cores_vs_ticks.png")
-    plt.savefig(save_path)
+    plt.savefig(save_path, bbox_inches='tight')
     plt.close()
     print(f"Saved {save_path}")
 
@@ -139,7 +139,7 @@ def plot_associativity_ticks():
     plt.xticks(assoc_counts)
     plt.grid(True, linestyle=':')
     save_path = os.path.join(OUTPUT_DIR, "assoc_vs_ticks.png")
-    plt.savefig(save_path)
+    plt.savefig(save_path, bbox_inches='tight')
     plt.close()
     print(f"Saved {save_path}")
 
@@ -169,7 +169,7 @@ def plot_associativity_l1d_miss():
     plt.xticks(assoc_counts)
     plt.grid(True, linestyle=':')
     save_path = os.path.join(OUTPUT_DIR, "assoc_vs_l1d_miss.png")
-    plt.savefig(save_path)
+    plt.savefig(save_path, bbox_inches='tight')
     plt.close()
     print(f"Saved {save_path}")
 
@@ -199,7 +199,7 @@ def plot_associativity_l2_miss():
     plt.xticks(assoc_counts)
     plt.grid(True, linestyle=':')
     save_path = os.path.join(OUTPUT_DIR, "assoc_vs_l2_miss.png")
-    plt.savefig(save_path)
+    plt.savefig(save_path, bbox_inches='tight')
     plt.close()
     print(f"Saved {save_path}")
 
@@ -242,7 +242,7 @@ def _generate_heatmap(data_grid, title, cbar_label, filename, l1d_sizes, l2_size
                 plt.text(j, i, text_format, ha="center", va="center", color=text_color, fontsize=9)
 
     save_path = os.path.join(OUTPUT_DIR, filename)
-    plt.savefig(save_path)
+    plt.savefig(save_path, bbox_inches='tight')
     plt.close()
     print(f"Saved {save_path}")
 
