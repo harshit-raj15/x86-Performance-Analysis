@@ -2,7 +2,7 @@
 
 echo "--- Starting Cache Size Scaling Experiment ---"
 
-# --- Paths ---
+# Paths
 GEM5_ROOT=$(dirname $(dirname $(pwd)))
 GEM5_BIN="$GEM5_ROOT/build/X86/gem5.opt"
 
@@ -12,17 +12,17 @@ PROJECT_DIR=$(pwd)
 SIM_SCRIPT="$PROJECT_DIR/se.py"
 WORKLOAD="$PROJECT_DIR/sort_algorithm_binary"
 
-# --- Parameters ---
+# Parameters
 CPU_TYPE="AtomicSimpleCPU"
 CPU_COUNT=8
 L1I_SIZE="16kB"
 ASSOC=4
 
-# --- Parameters to vary ---
+# Parameters to vary
 L1D_SIZES=("16kB" "32kB" "64kB" "128kB")
 L2_SIZES=("128kB" "256kB" "512kB" "1MB")
 
-# --- Run Loop ---
+# Run Loop
 for l1 in "${L1D_SIZES[@]}"; do
   for l2 in "${L2_SIZES[@]}"; do
     echo "-------------------------------------"

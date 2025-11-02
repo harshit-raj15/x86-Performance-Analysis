@@ -2,7 +2,7 @@
 
 echo "--- Starting Core Scaling Experiment ---"
 
-# --- Paths ---
+# Paths
 GEM5_ROOT=$(dirname $(dirname $(pwd)))
 GEM5_BIN="$GEM5_ROOT/build/X86/gem5.opt"
 
@@ -12,16 +12,16 @@ PROJECT_DIR=$(pwd)
 SIM_SCRIPT="$PROJECT_DIR/se.py"
 WORKLOAD="$PROJECT_DIR/sort_algorithm_binary"
 
-# --- Parameters ---
+# Parameters
 CPU_TYPE="AtomicSimpleCPU"
 L1D_SIZE="64kB"
 L1I_SIZE="16kB"
 L2_SIZE="256kB"
 
-# --- CPUs to test ---
+# CPUs to test
 CPU_COUNTS=(2 4 8 16)
 
-# --- Run Loop ---
+# Run Loop
 for cpus in "${CPU_COUNTS[@]}"; do
   echo "-------------------------------------"
   echo "--- Running: $cpus cores ---"

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Use the below command if getting any error!
+# sed -i 's/\r$//' run_all.sh
+
 set -e
 
 echo "=== STARTING FULL PROJECT WORKFLOW ==="
@@ -12,13 +15,13 @@ rm -rf output_plots/
 
 # Running All Simulation Experiments
 echo "=== Running Core Scaling Experiment ==="
-bash ./run_core_scaling.sh
+bash ./core_scaling.sh
 
 echo "=== Running Associativity Experiment ==="
-bash ./run_assoc_scaling.sh
+bash ./cache_associativity_scaling.sh
 
 echo "=== Running Cache Size Experiment ==="
-bash ./run_size_scaling.sh
+bash ./cache_size_scaling.sh
 
 echo "=== All Simulations Complete! ==="
 echo ""

@@ -2,7 +2,7 @@
 
 echo "--- Starting Cache Associativity Scaling Experiment ---"
 
-# --- Paths ---
+# Paths
 GEM5_ROOT=$(dirname $(dirname $(pwd)))
 GEM5_BIN="$GEM5_ROOT/build/X86/gem5.opt"
 
@@ -12,17 +12,17 @@ PROJECT_DIR=$(pwd)
 SIM_SCRIPT="$PROJECT_DIR/se.py"
 WORKLOAD="$PROJECT_DIR/sort_algorithm_binary"
 
-# --- Parameters ---
+# Parameters
 CPU_TYPE="AtomicSimpleCPU"
 CPU_COUNT=8
 L1D_SIZE="64kB"
 L1I_SIZE="16kB"
 L2_SIZE="256kB"
 
-# --- Parameters to vary ---
+# Parameters to vary
 ASSOC_COUNTS=(1 2 4 8)
 
-# --- Run Loop ---
+# Run Loop
 for assoc in "${ASSOC_COUNTS[@]}"; do
   echo "-------------------------------------"
   echo "--- Running: 8 cores, L1D/L2 Assoc=$assoc ---"
