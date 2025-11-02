@@ -25,6 +25,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#results">Results</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#authors">Authors</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -84,15 +85,17 @@ Follow these steps to set up the project environment and compile the workload.
 
 Once the project is set up and the binary is compiled, you can run the analysis scripts.
 
-1.  Make the simulation scripts executable:
+*  Make the simulation scripts executable:
     ```bash
     chmod +x core_scaling.sh
     chmod +x cache_size_scaling.sh
     chmod +x cache_associativity_scaling.sh
+    chmod +x run_all.sh
     ```
 
-2.  Run the scaling experiments **one after another**. This is critical to prevent them from overwriting each other's output files.
+### Option 1: Run Manually
 
+*  Run the scaling experiments **one after another**. This is critical to prevent them from overwriting each other's output files.
     ```bash
     # Run the script to get core scaling result
     ./core_scaling.sh
@@ -104,10 +107,37 @@ Once the project is set up and the binary is compiled, you can run the analysis 
     ./cache_associativity_scaling.sh
     ```
 
-3.  After the simulations are complete, run the Python script to generate the final plots:
+*  After the simulations are complete, run the Python script to generate the final plots:
     ```bash
     python3 final_plot.py
     ```
+
+### Option 2: Run All (Recommended)
+
+*  You can skip the manual steps by directly running the `run_all.sh` script. This will execute all three scaling experiments sequentially and then automatically run the Python script to generate the final plots.
+    ```bash
+    # Run all experiments and generate plots
+    ./run_all.sh
+    ```
+
+## Results
+
+You will find all the result plot in **output_plot** directory.
+
+### Core Scaling
+| Ticks vs Cores | Execution Time vs Cores |
+| :---: | :---: |
+| <img src="output_plots/cores_vs_ticks.png" alt="Core Scaling vs Ticks" width="400"> | <img src="output_plots/cores_vs_time.png" alt="Core Scaling vs Time" width="400"> |
+
+### Cache Size Scaling
+| L1D Miss Heatmap | L2 Miss Heatmap | Ticks Heatmap |
+| :---: | :---: | :---: |
+| <img src="output_plots/cache_size_vs_l1d_miss_heatmap.png" alt="Cache Size vs L1D Miss" width="260"> | <img src="output_plots/cache_size_vs_l2_miss_heatmap.png" alt="Cache Size vs L2 Miss" width="260"> | <img src="output_plots/cache_size_vs_ticks_heatmap.png" alt="Cache Size vs Ticks" width="260"> |
+
+### Cache Associativity Scaling
+| L1D Misses vs Associativity | L2 Misses vs Associativity | Ticks vs Associativity |
+| :---: | :---: | :---: |
+| <img src="output_plots/assoc_vs_l1d_misses.png" alt="Associativity vs L1D Misses" width="260"> | <img src="output_plots/assoc_vs_l2_miss.png" alt="Associativity vs L2 Miss" width="260"> | <img src="output_plots/assoc_vs_ticks.png" alt="Associativity vs Ticks" width="260"> |
 
 ## License
 
