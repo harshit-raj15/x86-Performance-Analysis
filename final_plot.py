@@ -7,6 +7,7 @@ import numpy as np
 
 # Directory
 STATS_DIR = "m5out/"
+OUTPUT_DIR = "output_plots/"
 
 # Regex to extract stats
 STATS_TO_PARSE = {
@@ -75,9 +76,10 @@ def plot_core_scaling_time():
     plt.ylabel("Simulation Time (s)")
     plt.xticks(cpu_counts)
     plt.grid(True, linestyle=':')
-    plt.savefig("cores_vs_time.png")
+    save_path = os.path.join(OUTPUT_DIR, "cores_vs_time.png")
+    plt.savefig(save_path)
     plt.close()
-    print("Saved cores_vs_time.png")
+    print(f"Saved {save_path}")
 
 def plot_core_scaling_ticks():
 
@@ -104,9 +106,10 @@ def plot_core_scaling_ticks():
     plt.ylabel("Simulation Ticks")
     plt.xticks(cpu_counts)
     plt.grid(True, linestyle=':')
-    plt.savefig("cores_vs_ticks.png")
+    save_path = os.path.join(OUTPUT_DIR, "cores_vs_ticks.png")
+    plt.savefig(save_path)
     plt.close()
-    print("Saved cores_vs_ticks.png")
+    print(f"Saved {save_path}")
 
 # Associativity Scaling Plots
 def plot_associativity_ticks():
@@ -135,9 +138,10 @@ def plot_associativity_ticks():
     plt.ylabel("Simulation Ticks")
     plt.xticks(assoc_counts)
     plt.grid(True, linestyle=':')
-    plt.savefig("assoc_vs_ticks.png")
+    save_path = os.path.join(OUTPUT_DIR, "assoc_vs_ticks.png")
+    plt.savefig(save_path)
     plt.close()
-    print("Saved assoc_vs_ticks.png")
+    print(f"Saved {save_path}")
 
 def plot_associativity_l1d_miss():
     print("Generating Associativity vs. L1D Miss Rate Plot")
@@ -164,9 +168,10 @@ def plot_associativity_l1d_miss():
     plt.ylabel("L1D Miss Rate (cpu0)")
     plt.xticks(assoc_counts)
     plt.grid(True, linestyle=':')
-    plt.savefig("assoc_vs_l1d_miss.png")
+    save_path = os.path.join(OUTPUT_DIR, "assoc_vs_l1d_miss.png")
+    plt.savefig(save_path)
     plt.close()
-    print("Saved assoc_vs_l1d_miss.png")
+    print(f"Saved {save_path}")
 
 def plot_associativity_l2_miss():
     print("Generating Associativity vs. L2 Miss Rate Plot")
@@ -193,14 +198,14 @@ def plot_associativity_l2_miss():
     plt.ylabel("L2 Overall Miss Rate")
     plt.xticks(assoc_counts)
     plt.grid(True, linestyle=':')
-    plt.savefig("assoc_vs_l2_miss.png")
+    save_path = os.path.join(OUTPUT_DIR, "assoc_vs_l2_miss.png")
+    plt.savefig(save_path)
     plt.close()
-    print("Saved assoc_vs_l2_miss.png")
-
+    print(f"Saved {save_path}")
 
 # Cache Size Scaling Plots
 def _generate_heatmap(data_grid, title, cbar_label, filename, l1d_sizes, l2_sizes):
-    """Helper function to create a heatmap."""
+
     if np.isnan(data_grid).all():
         print(f"Error: No data for {title}. Skipping plot.")
         return
@@ -216,31 +221,37 @@ def _generate_heatmap(data_grid, title, cbar_label, filename, l1d_sizes, l2_size
     plt.ylabel("L1D Cache Size")
     plt.xticks(np.arange(len(l2_sizes)), labels=l2_sizes)
     plt.yticks(np.arange(len(l1d_sizes)), labels=l1d_sizes)
-    
-    # Add text annotations
+
     for i in range(len(l1d_sizes)):
         for j in range(len(l2_sizes)):
             value = data_grid[i, j]
             if not np.isnan(value):
-                # Determine text color based on background brightness
-                threshold = data_grid[~np.isnan(data_grid)].max() / 2.
-                text_color = "white" if value > threshold else "black"
-                plt.text(j, i, f"{value:.4f}", ha="center", va="center", color=text_color)
+                valid_data = data_grid[~np.isnan(data_grid)]
+                if valid_data.size > 0:
+                    vmin = np.nanmin(valid_data)
+                    vmax = np.nanmax(valid_data)
+                    threshold = vmin + (vmax - vmin) / 2.0
+                    text_color = "black" if value > threshold else "white"
+                else:
+                    text_color = "black"
 
-    plt.savefig(filename)
+                if value > 10000:
+                    text_format = f"{value:.2e}"
+                else:
+                    text_format = f"{value:.4f}"
+                plt.text(j, i, text_format, ha="center", va="center", color=text_color, fontsize=9)
+
+    save_path = os.path.join(OUTPUT_DIR, filename)
+    plt.savefig(save_path)
     plt.close()
-    print(f"Saved {filename}")
+    print(f"Saved {save_path}")
 
 def plot_cache_size_scaling():
-    """
-    Parses cache size data and generates heatmaps for ticks,
-    L1D miss rate, and L2 miss rate.
-    """
-    print("Generating Cache Size Scaling Plots...")
+
+    print("Generating Cache Size Scaling Plots")
     l1d_sizes = ["16kB", "32kB", "64kB", "128kB"]
     l2_sizes = ["128kB", "256kB", "512kB", "1MB"]
-    
-    # Create 2D grids for each stat
+
     ticks_grid = np.full((len(l1d_sizes), len(l2_sizes)), np.nan)
     l1d_miss_grid = np.full((len(l1d_sizes), len(l2_sizes)), np.nan)
     l2_miss_grid = np.full((len(l1d_sizes), len(l2_sizes)), np.nan)
@@ -258,9 +269,7 @@ def plot_cache_size_scaling():
                 ticks_grid[i, j] = ticks_val if ticks_val is not None else np.nan
                 l1d_miss_grid[i, j] = l1d_val if l1d_val is not None else np.nan
                 l2_miss_grid[i, j] = l2_val if l2_val is not None else np.nan
-            # No 'else' needed, grid is pre-filled with np.nan
 
-    # Generate the 3 heatmaps
     _generate_heatmap(ticks_grid, "Cache Size vs. Sim Ticks (8 Cores)", 
                       "Simulation Ticks", "cache_size_vs_ticks_heatmap.png",
                       l1d_sizes, l2_sizes)
@@ -273,18 +282,12 @@ def plot_cache_size_scaling():
                       "L2 Overall Miss Rate", "cache_size_vs_l2_miss_heatmap.png",
                       l1d_sizes, l2_sizes)
 
-
-# --- Main Execution ---
-
+# Main Function
 if __name__ == "__main__":
-    print("--- Starting Plot Generation ---")
-    
-    # Ensure matplotlib is installed
-    try:
-        import matplotlib
-    except ImportError:
-        print("Error: matplotlib is not installed. Please install it with 'pip3 install matplotlib numpy'")
-        exit(1)
+    print("Starting Plot Generation")
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    print(f"Saving Plots In : '{OUTPUT_DIR}'")
         
     # Core Scaling Plots
     plot_core_scaling_time()
@@ -298,4 +301,4 @@ if __name__ == "__main__":
     # Cache Size Scaling Plots
     plot_cache_size_scaling()
     
-    print("--- All Plots Generated Successfully ---")
+    print("All Plots Generated Successfully!")
