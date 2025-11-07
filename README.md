@@ -62,12 +62,7 @@ Follow these steps to set up the project environment and compile the workload.
     cd gem5/configs/final_project
     ```
 
-2.  Copy the necessary simulation scripts from the gem5 common directories:
-    ```bash
-    cp ../deprecated/example/se.py .
-    cp ../common/Caches.py .
-    cp ../common/CacheConfig.py .
-    ```
+2.  Copy the necessary simulation scripts from the repo to the new directory that you have created.
 
 3.  Add the parent `configs` directory to your `PYTHONPATH` so gem5 can find the modules:
     ```bash
