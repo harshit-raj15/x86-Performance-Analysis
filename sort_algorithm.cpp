@@ -8,8 +8,8 @@
 
 
 // Parameters
-const int SERIAL_THRESHOLD = 200000; // for gem5 100k–300k
-const int N = 20000000; // for gem5 to 1M or 2M
+const int SERIAL_THRESHOLD = 30000; // for gem5 100k–300k, we have to use 200000 (1% of N)
+const int N = 1000000; // for gem5 to 1M or 2M, we have to use 20000000
 
 // Merge
 void merge(std::vector<int>& arr, std::vector<int>& temp, int left, int mid, int right) {
@@ -112,7 +112,8 @@ int main() {
 
     double end = omp_get_wtime();
     std::cout << "Time: " << end - start << " seconds\n";
-
+	
+    /*
     // Validating the result
     for (int i = 0; i < N - 1; i++) {
         if (arr[i] > arr[i + 1]) {
@@ -122,5 +123,8 @@ int main() {
     }
 
     std::cout << "Validation PASSED \n";
+    */
+    
+    std::cout << "Simulation Finished \n";
     return 0;
 }

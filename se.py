@@ -134,6 +134,14 @@ parser = argparse.ArgumentParser()
 Options.addCommonOptions(parser)
 Options.addSEOptions(parser)
 
+# Added Lines
+parser.add_argument("--l1d_assoc", type=int, default=2,
+                    help="L1 data cache associativity (default: 2)")
+parser.add_argument("--l1i_assoc", type=int, default=2,
+                    help="L1 instruction cache associativity (default: 2)")
+parser.add_argument("--l2_assoc", type=int, default=8,
+                    help="L2 cache associativity (default: 8)")
+
 if "--ruby" in sys.argv:
     Ruby.define_options(parser)
 
