@@ -8,12 +8,13 @@ GEM5_BIN="$GEM5_ROOT/build/X86/gem5.opt"
 
 export PYTHONPATH=$PYTHONPATH:$(pwd)/..
 
+OUTPUT_DIR="m5out_ca"
 PROJECT_DIR=$(pwd)
 SIM_SCRIPT="$PROJECT_DIR/se.py"
 WORKLOAD="$PROJECT_DIR/sort_algorithm_binary"
 
 # Parameters
-CPU_TYPE="AtomicSimpleCPU"
+CPU_TYPE="O3CPU"
 CPU_COUNT=8
 L1D_SIZE="64kB"
 L1I_SIZE="16kB"
@@ -28,7 +29,7 @@ for assoc in "${ASSOC_COUNTS[@]}"; do
   echo "--- Running: 8 cores, L1D/L2 Assoc=$assoc ---"
   echo "-------------------------------------"
 
-  $GEM5_BIN $SIM_SCRIPT \
+  $GEM5_BIN --outdir=$OUTPUT_DIR $SIM_SCRIPT \
     --cpu-type=$CPU_TYPE \
     -c $WORKLOAD \
     --num-cpus=$CPU_COUNT \
@@ -40,9 +41,17 @@ for assoc in "${ASSOC_COUNTS[@]}"; do
     --l1d_assoc=$assoc \
     --l2_assoc=$assoc
 
-  mv ./m5out/stats.txt ./m5out/stats_assoc_${assoc}.txt
+  cp ./m5out_ca/stats.txt ./m5out_ca/stats_assoc_${assoc}.txt
 
-  echo "--- Finished: Assoc=$assoc. Stats saved to m5out/stats_assoc_${assoc}.txt ---"
+  mkdir -p ./m5out_ca/stats_assoc_${assoc}
+  
+  for file in ./m5out_ca/*; do
+    if [[ -f "$file" && $(basename "$file") != stats_* ]]; then
+      mv "$file" "./m5out_ca/stats_assoc_${assoc}/"
+    fi
+  done
+
+  echo "--- Finished: Assoc=$assoc. Stats saved to m5out_ca/stats_assoc_${assoc}.txt ---"
 done
 
 echo "--- All Cache Associativity Simulations Complete ---"

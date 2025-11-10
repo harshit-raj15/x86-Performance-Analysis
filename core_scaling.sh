@@ -8,12 +8,13 @@ GEM5_BIN="$GEM5_ROOT/build/X86/gem5.opt"
 
 export PYTHONPATH=$PYTHONPATH:$(pwd)/..
 
+OUTPUT_DIR="m5out_cores"
 PROJECT_DIR=$(pwd)
 SIM_SCRIPT="$PROJECT_DIR/se.py"
 WORKLOAD="$PROJECT_DIR/sort_algorithm_binary"
 
 # Parameters
-CPU_TYPE="AtomicSimpleCPU"
+CPU_TYPE="O3CPU"
 L1D_SIZE="64kB"
 L1I_SIZE="16kB"
 L2_SIZE="256kB"
@@ -27,7 +28,7 @@ for cpus in "${CPU_COUNTS[@]}"; do
   echo "--- Running: $cpus cores ---"
   echo "-------------------------------------"
 
-  $GEM5_BIN $SIM_SCRIPT \
+  $GEM5_BIN --outdir=$OUTPUT_DIR $SIM_SCRIPT \
     --cpu-type=$CPU_TYPE \
     -c $WORKLOAD \
     --num-cpus=$cpus \
@@ -37,9 +38,17 @@ for cpus in "${CPU_COUNTS[@]}"; do
     --l1i_size=$L1I_SIZE \
     --l2_size=$L2_SIZE
 
-  mv ./m5out/stats.txt ./m5out/stats_cores_${cpus}.txt
+  cp ./m5out_cores/stats.txt ./m5out_cores/stats_cores_${cpus}.txt
+  
+  mkdir -p ./m5out_cores/stats_cores_${cpus}
+  
+  for file in ./m5out_cores/*; do
+    if [[ -f "$file" && $(basename "$file") != stats_* ]]; then
+      mv "$file" "./m5out_cores/stats_cores_${cpus}/"
+    fi
+  done
 
-  echo "--- Finished: $cpus cores. Stats saved to m5out/stats_cores_${cpus}.txt ---"
+  echo "--- Finished: $cpus cores. Stats saved to m5out_cores/stats_cores_${cpus}.txt ---"
 done
 
 echo "--- All Core Scaling Simulations Complete ---"

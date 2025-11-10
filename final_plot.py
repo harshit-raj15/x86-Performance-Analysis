@@ -6,7 +6,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Directory
-STATS_DIR = "m5out/"
+STATS_DIR_CORES = "m5out_cores/"
+STATS_DIR_CA = "m5out_ca/"
+STATS_DIR_CS = "m5out_cs/"
 OUTPUT_DIR = "output_plots/"
 
 # Regex to extract stats
@@ -58,7 +60,7 @@ def plot_core_scaling_time():
     sim_seconds = []
 
     for cpus in cpu_counts:
-        filepath = os.path.join(STATS_DIR, f"stats_cores_{cpus}.txt")
+        filepath = os.path.join(STATS_DIR_CORES, f"stats_cores_{cpus}.txt")
         stats = parse_stats(filepath)
         if stats and stats.get("sim_seconds"):
             sim_seconds.append(stats["sim_seconds"])
@@ -88,7 +90,7 @@ def plot_core_scaling_ticks():
     sim_ticks = []
 
     for cpus in cpu_counts:
-        filepath = os.path.join(STATS_DIR, f"stats_cores_{cpus}.txt")
+        filepath = os.path.join(STATS_DIR_CORES, f"stats_cores_{cpus}.txt")
         stats = parse_stats(filepath)
         if stats and stats.get("sim_ticks"):
             sim_ticks.append(stats["sim_ticks"])
@@ -119,7 +121,7 @@ def plot_associativity_ticks():
     sim_ticks = []
 
     for assoc in assoc_counts:
-        filepath = os.path.join(STATS_DIR, f"stats_assoc_{assoc}.txt")
+        filepath = os.path.join(STATS_DIR_CA, f"stats_assoc_{assoc}.txt")
         stats = parse_stats(filepath)  
         if stats:
             value = stats.get("sim_ticks")
@@ -149,7 +151,7 @@ def plot_associativity_l1d_miss():
     l1d_miss_rates = []
 
     for assoc in assoc_counts:
-        filepath = os.path.join(STATS_DIR, f"stats_assoc_{assoc}.txt")
+        filepath = os.path.join(STATS_DIR_CA, f"stats_assoc_{assoc}.txt")
         stats = parse_stats(filepath)
         if stats:
             value = stats.get("l1d_miss_rate")
@@ -178,7 +180,7 @@ def plot_associativity_l2_miss():
     assoc_counts = [1, 2, 4, 8]
     l2_miss_rates = []
     for assoc in assoc_counts:
-        filepath = os.path.join(STATS_DIR, f"stats_assoc_{assoc}.txt")
+        filepath = os.path.join(STATS_DIR_CA, f"stats_assoc_{assoc}.txt")
         stats = parse_stats(filepath)
         
         if stats:
@@ -258,7 +260,7 @@ def plot_cache_size_scaling():
 
     for i, l1 in enumerate(l1d_sizes):
         for j, l2 in enumerate(l2_sizes):
-            filepath = os.path.join(STATS_DIR, f"stats_size_l1_{l1}_l2_{l2}.txt")
+            filepath = os.path.join(STATS_DIR_CS, f"stats_size_l1_{l1}_l2_{l2}.txt")
             stats = parse_stats(filepath)
             
             if stats:

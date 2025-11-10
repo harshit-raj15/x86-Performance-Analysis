@@ -8,12 +8,13 @@ GEM5_BIN="$GEM5_ROOT/build/X86/gem5.opt"
 
 export PYTHONPATH=$PYTHONPATH:$(pwd)/..
 
+OUTPUT_DIR="m5out_cs"
 PROJECT_DIR=$(pwd)
 SIM_SCRIPT="$PROJECT_DIR/se.py"
 WORKLOAD="$PROJECT_DIR/sort_algorithm_binary"
 
 # Parameters
-CPU_TYPE="AtomicSimpleCPU"
+CPU_TYPE="O3CPU"
 CPU_COUNT=8
 L1I_SIZE="16kB"
 ASSOC=4
@@ -29,7 +30,7 @@ for l1 in "${L1D_SIZES[@]}"; do
     echo "--- Running: L1D=$l1, L2=$l2 ---"
     echo "-------------------------------------"
 
-    $GEM5_BIN $SIM_SCRIPT \
+    $GEM5_BIN --outdir=$OUTPUT_DIR $SIM_SCRIPT \
       --cpu-type=$CPU_TYPE \
       -c $WORKLOAD \
       --num-cpus=$CPU_COUNT \
@@ -41,9 +42,17 @@ for l1 in "${L1D_SIZES[@]}"; do
       --l1d_assoc=$ASSOC \
       --l2_assoc=$ASSOC
 
-    mv ./m5out/stats.txt ./m5out/stats_size_l1_${l1}_l2_${l2}.txt
+    cp ./m5out_cs/stats.txt ./m5out_cs/stats_size_l1_${l1}_l2_${l2}.txt
+    
+    mkdir -p ./m5out_cs/stats_size_l1_${l1}_l2_${l2}
+  
+    for file in ./m5out_cs/*; do
+      if [[ -f "$file" && $(basename "$file") != stats_* ]]; then
+        mv "$file" "./m5out_cs/stats_size_l1_${l1}_l2_${l2}/"
+      fi
+    done
 
-    echo "--- Finished: L1D=$l1, L2=$l2. Stats saved to m5out/stats_l1_${l1}_l2_${l2}.txt ---"
+    echo "--- Finished: L1D=$l1, L2=$l2. Stats saved to m5out_cs/stats_l1_${l1}_l2_${l2}.txt ---"
   done
 done
 
