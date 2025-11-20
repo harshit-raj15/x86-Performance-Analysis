@@ -15,6 +15,7 @@ rm -rf m5out_ca/
 rm -rf m5out_cs/
 rm -rf output_plots/
 
+
 # Running All Simulation Experiments
 echo "=== Running Core Scaling Experiment ==="
 bash ./core_scaling.sh &
