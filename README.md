@@ -39,10 +39,10 @@ This project uses the **gem5 simulator** to analyze the performance and scaling 
 The analysis is broken into three main experiments:
 
 * **Core Scaling:** Measures how execution time changes as the number of CPU cores increases (e.g., 2, 4, 8, 16).
-* **Cache Size Scaling:** Analyzes the impact of different L1 and L2 cache sizes on performance.
-* **Cache Associativity Scaling:** Investigates how L1 and L2 cache associativity affects hit rates and execution time.
+* **Cache Size Scaling:** Analyzes the impact of different L1 and L2 cache sizes on performance. (L1 Data Cache: 16kB, 32kB, 64kB, 128kB and L2 Cache: 128kB, 256kB, 512 kB, 1MB)
+* **Cache Associativity Scaling:** Investigates how L1 and L2 cache associativity (1, 2, 4, 8) affects hit rates and execution time.
 
-The final results are collected from gem5's  output files and plotted using a Python script.
+The final results are collected from gem5's output files and plotted using a Python script.
 
 ## Getting Started
 
