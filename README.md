@@ -118,6 +118,11 @@ Once the project is set up and the binary is compiled, you can run the analysis 
 ## Results
 
 You will find all the result plot in **output_plot** directory.
+Below is the link for the video presentation.
+    ```bash
+    # Drive Link For Final Presentation
+    https://drive.google.com/drive/folders/16hIOBYrz2Qa30zeD7zah3Tuw-TDIGl4u?usp=sharing
+    ```
 
 ### Core Scaling
 | Ticks vs Cores | Execution Time vs Cores |
