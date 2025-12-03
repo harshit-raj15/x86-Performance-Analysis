@@ -121,7 +121,8 @@ You will find all the result plot in **output_plot** directory.
 Below is the link for the video presentation:
 
 ```text
-[Video](https://drive.google.com/drive/folders/16hIOBYrz2Qa30zeD7zah3Tuw-TDIGl4u?usp=sharing)
+https://drive.google.com/drive/folders/16hIOBYrz2Qa30zeD7zah3Tuw-TDIGl4u?usp=sharing
+```
 
 ### Core Scaling
 | Ticks vs Cores | Execution Time vs Cores |
